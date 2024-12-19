@@ -1,0 +1,122 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1.3.0/dist/aframe-master.min.js"></script>
+    <script src='scripts/aframe-ar-nft.js'></script>
+    <link rel="stylesheet" href="index.css">
+    </head>
+    
+    
+    <body style='margin : 0px; overflow: hidden;'>
+     
+    <!--КНОПКИ ВИДЕО-->
+    <!--<div class="panel">
+    <div>
+        <button class="VPause"></button>
+    </div>
+    <div>
+        <button class="VStart"></button>
+    </div>
+    </div>
+    
+    <script>
+      const VStart = document.querySelector(".VStart")
+      const VPause = document.querySelector(".VPause")
+    
+      function FVStart(){
+          const video = document.getElementById("GoW")
+          video.play()
+      }
+      function FVPause(){
+          const video = document.getElementById("GoW")
+          video.pause()
+      }
+      VStart.addEventListener("click", FVStart);
+      VPause.addEventListener("click", FVPause);
+    </script>
+    
+    
+    <div>-->
+        <!--AR-->
+        <a-scene
+            id="AR-scene"
+            vr-mode-ui='enabled: false;'
+            renderer="logarithmicDepthBuffer: true; precision: medium;"
+            embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
+    
+            <!--АССЕТЫ ВИДЕО-->
+            <a-assets>
+              <video src="video/GoW.mp4"preload="auto" id="GoW-video" response-type="arraybuffer" >
+              <video src="video/GTA.mp4" preload="auto" id="GTA-video" response-type="arraybuffer">
+            </a-assets>
+    
+            <a-nft
+                id="GoW-nft"
+                data-video-id="GoW-video"
+                videohandler
+                type='nft' url='nft/GoW/GoW'
+                smooth='true' smoothCount='10' smoothTolerance='0.01' smoothThreshold='5'>
+                <a-video 
+                    src="#GoW-video" 
+                    position='200 150 -100'
+                    rotation='-90 0 0'
+                    width='300'
+                    height='175' 
+                    >
+                </a-video>
+            </a-nft>
+            <a-nft
+                id="GTA-nft"
+                data-video-id="GTA-video"
+                videohandler
+                type='nft' url='nft/GTA/GTA'
+                smooth='true' smoothCount='10' smoothTolerance='0.01' smoothThreshold='5'>
+                <a-video 
+                    src="#GTA-video" 
+                    position='200 150 -100'
+                    rotation='-90 0 0'
+                    width='300'
+                    height='175' 
+                    >
+                </a-video>
+            </a-nft>
+            <a-entity camera></a-entity>
+        </a-scene>
+    </div>
+
+<script>
+        const GTA_Marker = document.querySelector("#GTA-nft");
+        const GTA_Video_Id = GTA_Marker.getAttribute('data-video-id');
+        const GTA_Video = document.getElementById(GTA_Video_Id)
+
+        GTA_Marker.addEventListener('markerFound', () => {
+        console.log('Маркер найден! ID видео:', GTA_Video);
+
+        GTA_Video.play(); // Начать воспроизведение видео
+        });
+
+        GTA_Marker.addEventListener('markerLost', () => {
+        console.log('Маркер потерян!');
+        GTA_Video.pause(); // Приостановить воспроизведение видео
+        GTA_Video.currentTime = 0; // Сбросить воспроизведение на начало
+        
+    });
+</script>
+<script>
+    const GoW_Marker = document.querySelector("#GoW-nft");
+    const GoW_Video_Id = GoW_Marker.getAttribute('data-video-id');
+    const GoW_Video = document.getElementById(GoW_Video_Id)
+
+    GoW_Marker.addEventListener('markerFound', () => {
+    console.log('Маркер найден! ID видео:', GoW_Video);
+
+    GoW_Video.play(); // Начать воспроизведение видео
+    });
+
+    GoW_Marker.addEventListener('markerLost', () => {
+    console.log('Маркер потерян!');
+    GoW_Video.pause(); // Приостановить воспроизведение видео
+    GoW_Video.currentTime = 0; // Сбросить воспроизведение на начало
+    
+});
+</script>
+    
+</body>
